@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction Result{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <header>
+        <h1>Prediction Result</h1>
+    </header>
+
+    {% if prediction_text %}
+        <div class="alert alert-info">
+            {{ prediction_text }}
+        </div>
+    {% else %}
+        <div class="alert alert-warning">
+            No prediction available. Please try again.
+        </div>
+    {% endif %}
+
+    <a href="{{ url_for('home1') }}" class="btn btn-primary btn-lg mt-3">Try Again</a>
+</div>
+{% endblock %}
