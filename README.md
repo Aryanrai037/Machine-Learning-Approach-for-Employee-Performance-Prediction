@@ -23,7 +23,7 @@ pip install -r requirements.txt
 
 python app.py
 
-**Check it Out**: Open your web browser and go to http://127.0.0.1:5000/.
+**Live link of the project when we run the project on Render to live the project**:-https://machine-learning-approach-for-employee-eegd.onrender.com
 
 **How the Magic Happens** 🧙‍♀️
 
