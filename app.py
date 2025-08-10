@@ -23,17 +23,17 @@ def about_page():
 
 
 @app.route("/predict_form")
-def predict_page():
+def predict_form():
     return render_template('predict.html')
 
 
-@app.route("/submit_result")
+@app.route("/submit")
 def submit_page():
     return render_template('submit.html')
 
 
-@app.route("/predict_action", methods=['POST'])
-def predict():
+@app.route("/pred", methods=['POST'])
+def predict_action():
     if model is None:
         return "Model not loaded properly", 500
 
@@ -73,8 +73,9 @@ def predict():
         return render_template('submit.html', prediction_text=text)
 
     except Exception as e:
-        print(f"Error in prediction: {e}")
-        return "Bad Request: Error processing form data.", 400
+        print("Error in prediction:", e)
+        return "An error occurred during prediction.", 500
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run(debug=True)
