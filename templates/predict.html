@@ -3,68 +3,71 @@
 {% block title %}Predict{% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-header bg-primary text-white">
-        <h1 class="h4 mb-0">Predict Employee Performance</h1>
-    </div>
-    <div class="card-body">
-        <form action="{{ url_for('make_prediction') }}" method="POST">
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <label for="quarter" class="form-label">Quarter:</label>
-                    <input type="number" id="quarter" name="quarter" class="form-control">
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h1 class="h4 mb-0">Predict Employee Performance</h1>
+        </div>
+        <div class="card-body">
+            <!-- Form now submits to the 'predict_action' route -->
+            <form action="{{ url_for('predict_action') }}" method="POST">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="quarter" class="form-label">Quarter:</label>
+                        <input type="number" id="quarter" name="quarter" class="form-control" placeholder="Enter quarter (e.g., 2)">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="department" class="form-label">Department:</label>
+                        <input type="number" id="department" name="department" class="form-control" placeholder="Enter department number (e.g., 5)">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="day" class="form-label">Day:</label>
+                        <input type="number" id="day" name="day" class="form-control" placeholder="Enter day (e.g., 4)">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="team" class="form-label">Team:</label>
+                        <input type="number" id="team" name="team" class="form-control" placeholder="Enter team number (e.g., 7)">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="targeted_productivity" class="form-label">Targeted Productivity:</label>
+                        <input type="number" step="any" id="targeted_productivity" name="targeted_productivity" class="form-control" placeholder="Enter targeted productivity (e.g., 0.55)">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="smv" class="form-label">SMV:</label>
+                        <input type="number" step="any" id="smv" name="smv" class="form-control" placeholder="Enter SMV (e.g., 25.5)">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="over_time" class="form-label">Over Time:</label>
+                        <input type="number" id="over_time" name="over_time" class="form-control" placeholder="Enter over time in minutes (e.g., 1200)">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="incentive" class="form-label">Incentive:</label>
+                        <input type="number" id="incentive" name="incentive" class="form-control" placeholder="Enter incentive (e.g., 200)">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="idle_time" class="form-label">Idle Time:</label>
+                        <input type="number" step="any" id="idle_time" name="idle_time" class="form-control" placeholder="Enter idle time (e.g., 0)">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="idle_men" class="form-label">Idle Men:</label>
+                        <input type="number" id="idle_men" name="idle_men" class="form-control" placeholder="Enter idle men (e.g., 0)">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="no_of_style_change" class="form-label">No. of Style Change:</label>
+                        <input type="number" id="no_of_style_change" name="no_of_style_change" class="form-control" placeholder="Enter number of style changes (e.g., 2)">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="no_of_workers" class="form-label">No. of Workers:</label>
+                        <input type="number" step="any" id="no_of_workers" name="no_of_workers" class="form-control" placeholder="Enter number of workers (e.g., 50)">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="month" class="form-label">Month:</label>
+                        <input type="number" id="month" name="month" class="form-control" placeholder="Enter month (e.g., 8)">
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <label for="department" class="form-label">Department:</label>
-                    <input type="number" id="department" name="department" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label for="day" class="form-label">Day:</label>
-                    <input type="number" id="day" name="day" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label for="team" class="form-label">Team:</label>
-                    <input type="number" id="team" name="team" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label for="targeted_productivity" class="form-label">Targeted Productivity:</label>
-                    <input type="number" step="any" id="targeted_productivity" name="targeted_productivity" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label for="smv" class="form-label">SMV:</label>
-                    <input type="number" step="any" id="smv" name="smv" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label for="over_time" class="form-label">Over Time:</label>
-                    <input type="number" id="over_time" name="over_time" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label for="incentive" class="form-label">Incentive:</label>
-                    <input type="number" id="incentive" name="incentive" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label for="idle_time" class="form-label">Idle Time:</label>
-                    <input type="number" step="any" id="idle_time" name="idle_time" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label for="idle_men" class="form-label">Idle Men:</label>
-                    <input type="number" id="idle_men" name="idle_men" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label for="no_of_style_change" class="form-label">No. of Style Change:</label>
-                    <input type="number" id="no_of_style_change" name="no_of_style_change" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label for="no_of_workers" class="form-label">No. of Workers:</label>
-                    <input type="number" step="any" id="no_of_workers" name="no_of_workers" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label for="month" class="form-label">Month:</label>
-                    <input type="number" id="month" name="month" class="form-control">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary mt-4">Submit</button>
-        </form>
+                <button type="submit" class="btn btn-primary mt-4">Submit</button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}
