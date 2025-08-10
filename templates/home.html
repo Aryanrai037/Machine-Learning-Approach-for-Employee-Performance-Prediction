@@ -3,11 +3,12 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="card text-center">
-    <div class="card-body">
-        <h1 class="card-title">Welcome to Employee Performance Analysis</h1>
-        <p class="card-text">This application helps analyze employee performance based on various factors. Use the Predict page to forecast productivity.</p>
-       <a href="{{ url_for('predict_page') }}" class="btn btn-primary btn-lg mt-3">Start Predicting</a>
-    </div>
+<header>
+    <h1 class="text-center">Welcome to Employee Performance Analysis</h1>
+</header>
+<p class="text-center">This application helps analyze employee performance based on various factors...</p>
+<div class="text-center mt-4">
+
+   <a href="{{ url_for('predict_form') }}" class="btn btn-primary btn-lg">Start Predicting</a>
 </div>
 {% endblock %}
