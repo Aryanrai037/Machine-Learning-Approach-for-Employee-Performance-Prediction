@@ -22,17 +22,17 @@ def about_page():
     return render_template('about.html')
 
 
-@app.route("/predict")
+@app.route("/predict_form")
 def predict_page():
     return render_template('predict.html')
 
 
-@app.route("/submit")
+@app.route("/submit_result")
 def submit_page():
     return render_template('submit.html')
 
 
-@app.route("/predict", methods=['POST'])
+@app.route("/predict_action", methods=['POST'])
 def predict():
     if model is None:
         return "Model not loaded properly", 500
