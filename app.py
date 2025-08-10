@@ -22,12 +22,12 @@ def about_page():
     return render_template('about.html')
 
 
-@app.route("/predict_page")
+@app.route("/predict")
 def predict_page():
     return render_template('predict.html')
 
 
-@app.route("/submit_page")
+@app.route("/submit")
 def submit_page():
     return render_template('submit.html')
 
@@ -78,4 +78,3 @@ def predict():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
