@@ -5,39 +5,41 @@ import pickle
 app = Flask(__name__)
 
 try:
+    # The model is loaded from the pickle file
     model = pickle.load(open('best_model.pkl', 'rb'))
     print("Model loaded successfully.")
 except Exception as e:
     print("Error loading model:", e)
     model = None
 
-
+# Route for the home page
 @app.route("/")
 def home_page():
     return render_template('home.html')
 
-
+# Route for the 'About' page
 @app.route("/about")
 def about_page():
     return render_template('about.html')
 
-
+# Route for the prediction form page
 @app.route("/predict_form")
-def predict_form():
+def predict_page():
     return render_template('predict.html')
 
-
-@app.route("/submit")
+# Route for the prediction result page
+@app.route("/submit_result")
 def submit_page():
     return render_template('submit.html')
 
-
-@app.route("/pred", methods=['POST'])
+# Route to handle form submission and make predictions
+@app.route("/predict_action", methods=['POST'])
 def predict_action():
     if model is None:
         return "Model not loaded properly", 500
 
     try:
+        # Get data from the form
         quarter = int(request.form.get('quarter', 0))
         department = int(request.form.get('department', 0))
         day = int(request.form.get('day', 0))
@@ -52,15 +54,18 @@ def predict_action():
         no_of_workers = float(request.form.get('no_of_workers', 0))
         month = int(request.form.get('month', 0))
 
+        # Create a numpy array with the input data
         total = np.array([[quarter, department, day, team, targeted_productivity, smv,
                            over_time, incentive, idle_time, idle_men, no_of_style_change,
                            no_of_workers, month]])
 
         print("Input Data:", total)
 
+        # Make a prediction using the loaded model
         prediction = model.predict(total)
         print("Raw Prediction:", prediction)
 
+        # Process the prediction result
         pred_value = float(prediction[0]) if isinstance(prediction, (list, np.ndarray)) else float(prediction)
 
         if pred_value <= 0.3:
@@ -70,12 +75,13 @@ def predict_action():
         else:
             text = 'The employee is highly productive'
 
+        # Render the 'submit' page with the prediction result
         return render_template('submit.html', prediction_text=text)
 
     except Exception as e:
+        # Handle any errors during the prediction process
         print("Error in prediction:", e)
         return "An error occurred during prediction.", 500
-
 
 if __name__ == "__main__":
     app.run(debug=True)
