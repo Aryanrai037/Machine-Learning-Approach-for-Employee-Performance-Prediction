@@ -80,8 +80,8 @@ def predict_action():
 
     except Exception as e:
         # Handle any errors during the prediction process
-        print("Error in prediction:", e)
-        return "An error occurred during prediction.", 500
+        print(f"Error in prediction: {e}")
+        return "Bad Request: Error processing form data.", 400
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
