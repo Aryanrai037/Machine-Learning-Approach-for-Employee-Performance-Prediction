@@ -27,10 +27,11 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <!-- The brand links to the home page -->
         <a class="navbar-brand" href="{{ url_for('home_page') }}">Performance Analysis</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <!-- 'home' को 'home_page' में बदला गया -->
+                <!-- Nav links now point to the correct routes defined in app.py -->
                 <li class="nav-item"><a class="nav-link" href="{{ url_for('home_page') }}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url_for('about_page') }}">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url_for('predict_page') }}">Predict</a></li>
@@ -42,3 +43,4 @@
     </div>
 </body>
 </html>
+
