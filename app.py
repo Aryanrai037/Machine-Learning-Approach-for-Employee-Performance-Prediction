@@ -1,44 +1,55 @@
 from flask import Flask, render_template, request
 import numpy as np
 import pickle
+import os
 
 app = Flask(__name__)
 
-try:
-    # The model path is corrected to look for the file in the root directory.
-    # The user's log shows an incorrect path 'MultipleFiles/best_model.pkl'
-    # but the file is in the root directory.
-    model = pickle.load(open('best_model.pkl', 'rb'))
-    print("Model loaded successfully.")
-except Exception as e:
-    print("Error loading model:", e)
-    model = None
+model = None
+# This flag tracks if the model was loaded successfully
+model_loaded = False 
 
+try:
+    # First, try to load the model from the current directory
+    model = pickle.load(open('best_model.pkl', 'rb'))
+    model_loaded = True
+    print("Model loaded successfully from the root directory.")
+except FileNotFoundError:
+    print("Model not found in the root directory. Trying 'MultipleFiles' directory...")
+    try:
+        # If the first attempt fails, try the 'MultipleFiles' subdirectory
+        model = pickle.load(open(os.path.join('MultipleFiles', 'best_model.pkl'), 'rb'))
+        model_loaded = True
+        print("Model loaded successfully from the 'MultipleFiles' directory.")
+    except FileNotFoundError:
+        print("Model not found in 'MultipleFiles' directory either. Prediction will not work.")
+    except Exception as e:
+        print(f"Error loading model from 'MultipleFiles' directory: {e}")
+except Exception as e:
+    print(f"Error loading model: {e}")
 
 @app.route("/")
 def home_page():
     return render_template('home.html')
 
-
 @app.route("/about")
 def about_page():
     return render_template('about.html')
-
 
 @app.route("/predict_form")
 def predict_page():
     return render_template('predict.html')
 
-
 @app.route("/submit_result")
 def submit_page():
     return render_template('submit.html')
 
-
 @app.route("/predict_action", methods=['POST'])
-def predict():
-    if model is None:
-        return "Model not loaded properly", 500
+def predict_action():
+    # Check if the model was loaded at startup before proceeding
+    if not model_loaded or model is None:
+        print("Prediction model not available. Returning error.")
+        return "Model not loaded properly. Please check server logs for errors.", 500
 
     try:
         quarter = int(request.form.get('quarter', 0))
