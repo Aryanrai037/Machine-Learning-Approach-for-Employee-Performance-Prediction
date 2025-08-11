@@ -23,7 +23,7 @@ pip install -r requirements.txt
 
 python app.py
 
-**Live link of the project when we run the project on Render to live the project**:-https://machine-learning-approach-for-employee-eegd.onrender.com
+**Live link of the project when we run the project on Render to live the project**:-https://machine-learning-approach-for-employee.onrender.com
 
 **How the Magic Happens** 🧙‍♀️
 
